@@ -21,9 +21,9 @@ public class CalculatorGUI implements ActionListener{
                 BorderFactory.createEmptyBorder(10, 10, 10, 10), // outer border
                 BorderFactory.createLoweredBevelBorder()));
 
-        backspace = new JButton("<-");
+        backspace = new JButton("⬅");
         clear = new JButton("C");
-        inv = new JButton("+-");
+        inv = new JButton("±");
         dot = new JButton(".");
         add = new JButton("+");
         sub = new JButton("-");
@@ -89,10 +89,11 @@ public class CalculatorGUI implements ActionListener{
         p1.add(equal);
         p1.add(div);
 
+
         frame.add(resultLabel,BorderLayout.NORTH);
         frame.add(p1,BorderLayout.WEST);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(280,250);
+        frame.setSize(290,250);
         frame.setLocationRelativeTo(null);
         frame.setFont(new Font("Verdana", Font.PLAIN, 18));
         frame.setVisible(true);
@@ -114,10 +115,15 @@ public class CalculatorGUI implements ActionListener{
 
     private void ifOperation(Object clickedButton) {
         if (clickedButton == backspace){
-            StringBuilder sb= new StringBuilder(resultLabel.getText());
-            sb.deleteCharAt(sb.length()-1);
+            try{
+                StringBuilder sb= new StringBuilder(resultLabel.getText());
+                sb.deleteCharAt(sb.length()-1);
 
-            resultLabel.setText(String.valueOf(sb));
+                resultLabel.setText(String.valueOf(sb));
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(resultLabel,"Invalid Input!");
+            }
+
         }else if (clickedButton == clear){
             resultLabel.setText("");
         }else if (clickedButton == inv){
@@ -159,24 +165,23 @@ public class CalculatorGUI implements ActionListener{
         try{
             num2 = Double.parseDouble(resultLabel.getText());
             double res;
-            System.out.println(operation);
-            System.out.println(num2);
             switch (operation){
                 case '+':
-                    System.out.println(num1+num2);
                     res = num1+num2;
                     resultLabel.setText(String.valueOf(res));
+                    break;
                 case '-':
                     resultLabel.setText(String.valueOf(num1-num2));
+                    break;
                 case '*':
                     resultLabel.setText(String.valueOf(num1*num2));
+                    break;
                 case '/':
                     resultLabel.setText(String.valueOf(num1/num2));
-                default:
-                    System.out.println("noneeee");
+                    break;
             }
         }catch (Exception e){
-
+            JOptionPane.showMessageDialog(resultLabel,"Invalid Input!");
         }
 
     }
